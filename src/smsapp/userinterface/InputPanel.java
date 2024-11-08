@@ -39,12 +39,16 @@ public class InputPanel extends JPanel {
     }
 
     public String getName() {
-        return name.getText();
+        String output = name.getText();
+        name.setText("");
+        return output;
     }
 
     public int getAge() {
         try {
-            return Integer.parseInt(age.getText());
+            int output = age.getText().equals("") ? -1 : Integer.parseInt(age.getText());
+            age.setText("");
+            return output;
         } catch (NumberFormatException e) {
             throw new NumberFormatException("Please provide age as a whole number");
         }
@@ -52,14 +56,18 @@ public class InputPanel extends JPanel {
 
     public Double getGrade() {
         try {
-            return Double.parseDouble(grade.getText());
+            Double output = grade.getText().equals("") ? -1 : Double.parseDouble(grade.getText());
+            grade.setText("");
+            return output;
         } catch (NumberFormatException e) {
             throw new NumberFormatException("Please provide grade as a number with two decimal places, separated with a dot");
         }
     }
 
     public String getStudentId() {
-        return studentID.getText();
+        String output = studentID.getText();
+        studentID.setText("");
+        return output;
     }
     
 
