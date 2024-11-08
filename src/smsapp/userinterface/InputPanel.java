@@ -1,10 +1,16 @@
-package sms_app.userinterface;
+package smsapp.userinterface;
 
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import smsapp.student.StudentManager;
+import smsapp.student.Student;
 
 public class InputPanel extends JPanel {
     private final JTextField name = new JTextField();
@@ -12,8 +18,14 @@ public class InputPanel extends JPanel {
     private final JTextField grade = new JTextField();
     private final JTextField studentID = new JTextField();
 
-    public InputPanel() {
-        setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+    private final StudentManager studentManager;
+    private final OutputPanel outputPanel;
+
+    public InputPanel(StudentManager studentManager, OutputPanel outputPanel) {
+        this.studentManager = studentManager;
+        this.outputPanel = outputPanel;
+
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JPanel buttons = createButtonsPanel();
         JPanel studentData = createStudentDataPanel();
@@ -51,31 +63,50 @@ public class InputPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER)); // to test out TODO!
 
-        JButton add = new JButon("Add Student");
+        JButton add = new JButton("Add Student");
         JButton remove = new JButton("Remove Student");
         JButton update = new JButton("Update Student");
         JButton displayAll = new JButton("Display All Students");
         JButton calculateAvg = new JButton("Calculate Average");
 
-        // TODO!
         add.addActionListener(event -> {
-
+            try {
+                studentManager.addStudent(createStudentFromFields());
+            } catch (Exception e) {
+                outputPanel.handleException(e);
+            }
         });
 
         remove.addActionListener(event -> {
-            
+            try {
+                studentManager.removeStudent(getStudentId());
+            } catch (Exception e) {
+                outputPanel.handleException(e);
+            }
         });
 
         update.addActionListener(event -> {
-            
+            try {
+                studentManager.updateStudent(createStudentFromFields());
+            } catch (Exception e) {
+                outputPanel.handleException(e);
+            }
         });
 
         displayAll.addActionListener(event -> {
-            
+            try {
+                outputPanel.displayStudents(studentManager.displayAllStudents());
+            } catch (Exception e) {
+                outputPanel.handleException(e);
+            }
         });
 
         calculateAvg.addActionListener(event -> {
-            
+            try {
+                outputPanel.displayAverageGrade(studentManager.calculateAverageGrade());
+            } catch (Exception e) {
+                outputPanel.handleException(e);
+            }
         });
 
         panel.add(add);
@@ -104,5 +135,9 @@ public class InputPanel extends JPanel {
         panel.add(studentID);
 
         return panel;
+    }
+
+    private Student createStudentFromFields() {
+        return new Student(getName(), getAge(), getGrade(), getStudentId());
     }
 }
