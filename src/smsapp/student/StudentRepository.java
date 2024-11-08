@@ -40,6 +40,29 @@ public class StudentRepository {
             statement.executeUpdate();
         }
     }
+
+    public void update(Student student) throws SQLException {
+        String sql = """
+                    UPDATE students
+                    SET 
+                        name = ?,
+                        age = ?,
+                        grade = ?
+                    WHERE studentID = ?;
+                    """;
+
+        try (
+            Connection connection = DriverManager.getConnection(url);
+            PreparedStatement statement = connection.prepareStatement(sql)
+        ) {
+            statement.setString(1, student.getName());
+            statement.setInt(2, student.getAge());
+            statement.setDouble(3, student.getGrade());
+            statement.setString(4, student.getStudentID());
+
+            statement.executeUpdate();
+        }
+    }
     
     public ArrayList<Student> getAllStudents() throws SQLException {
         try (

@@ -29,6 +29,15 @@ public class StudentManagerImpl implements StudentManager {
     }
 
     @Override
+    public void updateStudent(Student student) throws SQLException {
+        if (!studentRepository.isPresent(student.getStudentID())) {
+            throw new IllegalArgumentException("Student with provided ID doesn't exist");
+        }
+
+        studentRepository.update(student);
+    }
+
+    @Override
     public ArrayList<Student> displayAllStudents() throws SQLException {
         ArrayList<Student> students = studentRepository.getAllStudents();
         if (students.isEmpty()) {
