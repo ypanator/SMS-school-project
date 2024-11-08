@@ -55,9 +55,15 @@ public class StudentRepository {
             Connection connection = DriverManager.getConnection(url);
             PreparedStatement statement = connection.prepareStatement(sql)
         ) {
-            statement.setString(1, student.getName());
-            statement.setInt(2, student.getAge());
-            statement.setDouble(3, student.getGrade());
+            Student storedStudent = getStudent(student.getStudentID());
+            
+            statement.setString(
+                1, student.getName().equals("") ? storedStudent.getName() : student.getName());
+            statement.setInt(
+                2, student.getAge() == -1 ? storedStudent.getAge() : student.getAge());
+            statement.setDouble(
+                3, student.getGrade() == -1 ? storedStudent.getGrade() : student.getGrade());
+
             statement.setString(4, student.getStudentID());
 
             statement.executeUpdate();
@@ -111,4 +117,31 @@ public class StudentRepository {
         }
     }
 
+    public Student getStudent(String studentID) throws SQLException {
+        try (
+            Connection connection = DriverManager.getConnection(url);
+            Statement statement = connection.createStatement();
+            ResultSet data = statement.executeQuery("SELECT * FROM students;")
+        ) {
+            data.next();
+            return new Student(
+                data.getString("name"), 
+                data.getInt("age"), 
+                data.getDouble("grade"),
+                data.getString("studentID")
+            );
+        }
+    }
+
+    public String getName(String studentID) throws SQLException {
+        return getStudent(studentID).getName();
+    }
+
+    public int getAge(String studentID) throws SQLException {
+        return getStudent(studentID).getAge();
+    }
+
+    public double getGrade(String studentID) throws SQLException {
+        return getStudent(studentID).getGrade();
+    }
 }
