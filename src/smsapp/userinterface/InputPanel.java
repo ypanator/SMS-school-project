@@ -12,6 +12,10 @@ import javax.swing.JTextField;
 import smsapp.student.StudentManager;
 import smsapp.student.Student;
 
+// TODO:
+// 1. Use EDT
+// 2. Show info on screen after each button is invoked
+
 public class InputPanel extends JPanel {
     private final JTextField name = new JTextField();
     private final JTextField age = new JTextField();
