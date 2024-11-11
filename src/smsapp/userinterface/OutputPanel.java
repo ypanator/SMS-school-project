@@ -1,10 +1,17 @@
 package smsapp.userinterface;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.*;
 
 import smsapp.student.Student;
+import smsapp.student.StudentManager;
 
 /* TODO:
  * 1. Implement methods
@@ -12,20 +19,63 @@ import smsapp.student.Student;
  * 3. add a label to show operations results
  */
 public class OutputPanel extends JPanel {
+    private final JLabel avgGrade = new JLabel();
+    private final String[] columns = {"name", "age", "grade", "studentID"};
+    private final JTable students = new JTable(new DefaultTableModel(null, columns));
+    private final JLabel info = new JLabel();
 
-    public void displayStudents(ArrayList<Student> displayAllStudents) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'displayStudents'");
+    private final StudentManager studentManager;
+
+    public OutputPanel(StudentManager studentManager) {
+        this.studentManager = studentManager;
+
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        add(createDataPanel());
+        add(info);
     }
 
-    public void displayAverageGrade(double calculateAverageGrade) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'displayAverageGrade'");
+    private JPanel createDataPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+
+        panel.add(new JScrollPane(students));
+        panel.add(createAvgGradeWithLabel());
+
+        displayStudents(studentManager.displayAllStudents());
+
+        return panel;
+    }
+
+    private JPanel createAvgGradeWithLabel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        panel.add(avgGrade);
+        panel.add(new JLabel("Average grade"));
+
+        return panel;
+    }
+
+    public void displayStudents(ArrayList<Student> displayAllStudents) {
+        
+    }
+
+    public void displayAverageGrade(double number) {
+        avgGrade.setText(String.valueOf(number));
     }
 
     public void handleException(Exception e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleException'");
+        updateLabel(e.getMessage(), Color.RED);
+    }
+
+    public void displayMessage(String string) {
+        updateLabel(string, Color.GREEN);
+    }
+
+    private void updateLabel(String string, Color color) {
+        info.setText(string);
+        info.setForeground(color);
     }
     
 }
