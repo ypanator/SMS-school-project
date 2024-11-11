@@ -116,18 +116,21 @@ public class StudentRepository {
     }
 
     public Student getStudent(String studentID) throws SQLException {
+        String sql = "SELECT * FROM students WHERE studentID = ? LIMIT 1;";
         try (
             Connection connection = DriverManager.getConnection(url);
-            Statement statement = connection.createStatement();
-            ResultSet data = statement.executeQuery("SELECT * FROM students;")
+            PreparedStatement statement = connection.prepareStatement(sql);
         ) {
-            data.next();
-            return new Student(
-                data.getString("name"), 
-                data.getInt("age"), 
-                data.getDouble("grade"),
-                data.getString("studentID")
-            );
+            statement.setString(1, studentID);
+            try (ResultSet data = statement.executeQuery()) {
+                data.next();
+                return new Student(
+                    data.getString("name"), 
+                    data.getInt("age"), 
+                    data.getDouble("grade"),
+                    data.getString("studentID")
+                );
+            }
         }
     }
 
