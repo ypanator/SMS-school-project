@@ -103,16 +103,14 @@ public class StudentRepository {
     }
 
     public boolean isPresent(String studentID) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM students WHERE studentID = ?;";
+        String sql = "SELECT 1 FROM students WHERE studentID = ? LIMIT 1;";
         try (
             Connection connection = DriverManager.getConnection(url);
             PreparedStatement statement = connection.prepareStatement(sql);
         ) {
             statement.setString(1, studentID);
             try (ResultSet data = statement.executeQuery()) {
-                data.next();
-                int count = data.getInt(1);
-                return count > 0;
+                return data.next();
             }
         }
     }
