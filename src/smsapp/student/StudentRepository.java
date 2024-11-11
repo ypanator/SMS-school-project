@@ -42,28 +42,15 @@ public class StudentRepository {
     }
 
     public void update(Student student) throws SQLException {
-        String sql = """
-                    UPDATE students
-                    SET 
-                        name = ?,
-                        age = ?,
-                        grade = ?
-                    WHERE studentID = ?;
-                    """;
+        String sql = "UPDATE students SET name = ?, age = ?, grade = ? WHERE studentID = ?;";
 
         try (
             Connection connection = DriverManager.getConnection(url);
             PreparedStatement statement = connection.prepareStatement(sql)
         ) {
-            Student storedStudent = getStudent(student.getStudentID());
-            
-            statement.setString(
-                1, student.getName().equals("") ? storedStudent.getName() : student.getName());
-            statement.setInt(
-                2, student.getAge() == -1 ? storedStudent.getAge() : student.getAge());
-            statement.setDouble(
-                3, student.getGrade() == -1 ? storedStudent.getGrade() : student.getGrade());
-
+            statement.setString(1, student.getName());
+            statement.setInt(2, student.getAge());
+            statement.setDouble(3, student.getGrade());
             statement.setString(4, student.getStudentID());
 
             statement.executeUpdate();
