@@ -13,7 +13,6 @@ import smsapp.student.StudentManager;
 import smsapp.student.Student;
 
 // TODO:
-// 1. Use EDT
 // 2. Show info on screen after each button is invoked
 
 public class InputPanel extends JPanel {
@@ -31,11 +30,8 @@ public class InputPanel extends JPanel {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        JPanel buttons = createButtonsPanel();
-        JPanel studentData = createStudentDataPanel();
-
-        add(buttons);
-        add(studentData);
+        add(createButtonsPanel());
+        add(createStudentDataPanel());
     }
 
     public String getName() {
@@ -84,6 +80,7 @@ public class InputPanel extends JPanel {
         add.addActionListener(event -> {
             try {
                 studentManager.addStudent(createStudentFromFields());
+                outputPanel.displayMessage("Student has been added");
             } catch (Exception e) {
                 outputPanel.handleException(e);
             }
@@ -92,6 +89,7 @@ public class InputPanel extends JPanel {
         remove.addActionListener(event -> {
             try {
                 studentManager.removeStudent(getStudentId());
+                outputPanel.displayMessage("Student has been removed");
             } catch (Exception e) {
                 outputPanel.handleException(e);
             }
@@ -100,6 +98,7 @@ public class InputPanel extends JPanel {
         update.addActionListener(event -> {
             try {
                 studentManager.updateStudent(createStudentFromFields());
+                outputPanel.displayMessage("Student has been updated");
             } catch (Exception e) {
                 outputPanel.handleException(e);
             }
@@ -108,6 +107,7 @@ public class InputPanel extends JPanel {
         displayAll.addActionListener(event -> {
             try {
                 outputPanel.displayStudents(studentManager.displayAllStudents());
+                outputPanel.displayMessage("Students displayed");
             } catch (Exception e) {
                 outputPanel.handleException(e);
             }
@@ -116,6 +116,7 @@ public class InputPanel extends JPanel {
         calculateAvg.addActionListener(event -> {
             try {
                 outputPanel.displayAverageGrade(studentManager.calculateAverageGrade());
+                outputPanel.displayMessage("Average grade calculated");
             } catch (Exception e) {
                 outputPanel.handleException(e);
             }
