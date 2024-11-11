@@ -90,7 +90,7 @@ public class StudentRepository {
     }
 
     public boolean isPresent(String studentID) throws SQLException {
-        String sql = "SELECT 1 FROM students WHERE studentID = ? LIMIT 1;";
+        String sql = "SELECT 1 FROM students WHERE studentID = ?;";
         try (
             Connection connection = DriverManager.getConnection(url);
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -103,7 +103,7 @@ public class StudentRepository {
     }
 
     public Student getStudent(String studentID) throws SQLException {
-        String sql = "SELECT * FROM students WHERE studentID = ? LIMIT 1;";
+        String sql = "SELECT * FROM students WHERE studentID = ?;";
         try (
             Connection connection = DriverManager.getConnection(url);
             PreparedStatement statement = connection.prepareStatement(sql);

@@ -46,7 +46,7 @@ public class InputPanel extends JPanel {
 
     public int getAge() {
         try {
-            int output = age.getText().equals("") ? -1 : Integer.parseInt(age.getText());
+            int output = Integer.parseInt(age.getText());
             age.setText("");
             return output;
         } catch (NumberFormatException e) {
@@ -56,7 +56,7 @@ public class InputPanel extends JPanel {
 
     public Double getGrade() {
         try {
-            Double output = grade.getText().equals("") ? -1 : Double.parseDouble(grade.getText());
+            Double output = Double.parseDouble(grade.getText());
             grade.setText("");
             return output;
         } catch (NumberFormatException e) {
