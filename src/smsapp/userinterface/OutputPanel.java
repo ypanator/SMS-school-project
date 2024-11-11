@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
 
 import smsapp.student.Student;
 import smsapp.student.StudentManager;
@@ -57,8 +57,18 @@ public class OutputPanel extends JPanel {
         return panel;
     }
 
-    public void displayStudents(ArrayList<Student> displayAllStudents) {
-        
+    public void displayStudents(ArrayList<Student> storedStudents) {
+        DefaultTableModel model = (DefaultTableModel) students.getModel();
+        model.setRowCount(0);
+
+        for (Student student : storedStudents) {
+            model.addRow(new Object[] {
+                student.getName(),
+                student.getAge(),
+                student.getGrade(),
+                student.getStudentID()
+            });
+        }
     }
 
     public void displayAverageGrade(double number) {
@@ -77,5 +87,4 @@ public class OutputPanel extends JPanel {
         info.setText(string);
         info.setForeground(color);
     }
-    
 }
