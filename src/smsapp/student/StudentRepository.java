@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class StudentRepository {
 
     /** The URL of the SQLite database */
-    private final String url = "jdbc:sqlite:sms_app.db";
+    private final String url = "jdbc:sqlite:db/sms_app.db";
 
     /**
      * Constructs a new {@link StudentRepository} and ensures that the "students" table exists in the database.
