@@ -18,10 +18,6 @@ import smsapp.userinterface.MainWindow;
  * - A `MainWindow` to create the main user interface for the application.
  */
 public class Main {
-    
-    /** 
-     * @param args
-     */
     public static void main(String[] args) {
         MainWindow mainWindow = null;
         try {
