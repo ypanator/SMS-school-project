@@ -27,8 +27,10 @@ public class MainWindow extends JFrame {
      * @throws SQLException If an error occurs when initializing the student manager or the database.
      */
     public MainWindow(StudentManager studentManager) throws SQLException {
+        setSize(500, 400); 
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         outputPanel = new OutputPanel(studentManager);
         inputPanel = new InputPanel(studentManager, outputPanel);

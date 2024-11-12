@@ -53,12 +53,10 @@ public class OutputPanel extends JPanel {
      */
     private JPanel createDataPanel() throws SQLException {
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
         panel.add(new JScrollPane(students));
         panel.add(createAvgGradeWithLabel());
-
-        displayStudents(studentManager.displayAllStudents());
 
         return panel;
     }

@@ -1,6 +1,7 @@
 .devcontainer
 .github
 bin
+db/sms_app.db
 
 ### IntelliJ IDEA ###
 .idea
