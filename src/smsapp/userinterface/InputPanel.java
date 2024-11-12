@@ -12,9 +12,12 @@ import javax.swing.JTextField;
 import smsapp.student.StudentManager;
 import smsapp.student.Student;
 
-// TODO:
-// 2. Show info on screen after each button is invoked
-
+/**
+ * A JPanel class that provides a user interface for inputting and interacting with student data.
+ * The panel contains text fields for student details, such as name, age, grade, and student ID,
+ * as well as buttons to perform actions like adding, removing, updating, displaying all students,
+ * and calculating the average grade.
+ */
 public class InputPanel extends JPanel {
     private final JTextField name = new JTextField();
     private final JTextField age = new JTextField();
@@ -24,6 +27,12 @@ public class InputPanel extends JPanel {
     private final StudentManager studentManager;
     private final OutputPanel outputPanel;
 
+    /**
+     * Constructs a new InputPanel for interacting with the student data.
+     * 
+     * @param studentManager The StudentManager instance to manage student data operations
+     * @param outputPanel The OutputPanel instance to display messages and data
+     */
     public InputPanel(StudentManager studentManager, OutputPanel outputPanel) {
         this.studentManager = studentManager;
         this.outputPanel = outputPanel;
@@ -34,12 +43,24 @@ public class InputPanel extends JPanel {
         add(createStudentDataPanel());
     }
 
+    /**
+     * Retrieves the name entered in the name text field and clears the field.
+     * 
+     * @return The name entered by the user
+     */
     public String getName() {
         String output = name.getText();
         name.setText("");
         return output;
     }
 
+    /**
+     * Retrieves the age entered in the age text field, parses it as an integer, and clears the field.
+     * Throws an exception if the entered value is not a valid integer.
+     * 
+     * @return The age entered by the user
+     * @throws NumberFormatException If the age is not a valid integer
+     */
     public int getAge() {
         try {
             int output = Integer.parseInt(age.getText());
@@ -50,6 +71,13 @@ public class InputPanel extends JPanel {
         }
     }
 
+    /**
+     * Retrieves the grade entered in the grade text field, parses it as a double, and clears the field.
+     * Throws an exception if the entered value is not a valid number.
+     * 
+     * @return The grade entered by the user
+     * @throws NumberFormatException If the grade is not a valid number
+     */
     public Double getGrade() {
         try {
             Double output = Double.parseDouble(grade.getText());
@@ -60,16 +88,26 @@ public class InputPanel extends JPanel {
         }
     }
 
+    /**
+     * Retrieves the student ID entered in the student ID text field and clears the field.
+     * 
+     * @return The student ID entered by the user
+     */
     public String getStudentId() {
         String output = studentID.getText();
         studentID.setText("");
         return output;
     }
     
-
+    /**
+     * Creates a panel containing buttons for various student operations such as adding,
+     * removing, updating, displaying all students, and calculating the average grade.
+     * 
+     * @return A JPanel containing buttons for student operations
+     */
     private JPanel createButtonsPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER)); // to test out TODO!
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         JButton add = new JButton("Add Student");
         JButton remove = new JButton("Remove Student");
@@ -131,9 +169,14 @@ public class InputPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Creates a panel containing input fields for student data such as name, age, grade, and student ID.
+     * 
+     * @return A JPanel containing the input fields for student data
+     */
     private JPanel createStudentDataPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 4, 2, 2)); // set padding, TODO!
+        panel.setLayout(new GridLayout(2, 4, 2, 2));
 
         // first row
         panel.add(new JLabel("name"));
@@ -150,6 +193,11 @@ public class InputPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Creates a new Student object based on the data entered in the input fields.
+     * 
+     * @return A new Student object with the data from the input fields
+     */
     private Student createStudentFromFields() {
         return new Student(getName(), getAge(), getGrade(), getStudentId());
     }

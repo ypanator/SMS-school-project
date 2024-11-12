@@ -14,10 +14,13 @@ import javax.swing.table.DefaultTableModel;
 import smsapp.student.Student;
 import smsapp.student.StudentManager;
 
-/* TODO:
- * 1. Implement methods
- * 2. add a pretty table
- * 3. add a label to show operations results
+/**
+ * A JPanel that displays student data in a table and the average grade. 
+ * It also provides a way to show messages, including error and success messages.
+ * The panel contains:
+ * - A table to display student information (name, age, grade, and studentID).
+ * - A label to show the average grade of all students.
+ * - A label to display general messages (success or error).
  */
 public class OutputPanel extends JPanel {
     private final JLabel avgGrade = new JLabel();
@@ -27,6 +30,12 @@ public class OutputPanel extends JPanel {
 
     private final StudentManager studentManager;
 
+    /**
+     * Constructs a new OutputPanel that displays student data and messages.
+     * 
+     * @param studentManager The StudentManager instance used to manage student data.
+     * @throws SQLException If an error occurs while retrieving student data.
+     */
     public OutputPanel(StudentManager studentManager) throws SQLException {
         this.studentManager = studentManager;
 
@@ -36,6 +45,12 @@ public class OutputPanel extends JPanel {
         add(info);
     }
 
+    /**
+     * Creates a panel to display student data (in a table) and the average grade label.
+     * 
+     * @return A JPanel containing the JTable and the average grade label.
+     * @throws SQLException If an error occurs while retrieving student data.
+     */
     private JPanel createDataPanel() throws SQLException {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -48,6 +63,11 @@ public class OutputPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Creates a panel containing the label for the average grade.
+     * 
+     * @return A JPanel containing the label for displaying the average grade.
+     */
     private JPanel createAvgGradeWithLabel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -58,6 +78,11 @@ public class OutputPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Displays the given list of students in the JTable.
+     * 
+     * @param storedStudents A list of students to be displayed in the table.
+     */
     public void displayStudents(ArrayList<Student> storedStudents) {
         DefaultTableModel model = (DefaultTableModel) students.getModel();
         model.setRowCount(0);
@@ -72,18 +97,39 @@ public class OutputPanel extends JPanel {
         }
     }
 
+    /**
+     * Displays the average grade in the corresponding label.
+     * 
+     * @param number The average grade to be displayed.
+     */
     public void displayAverageGrade(double number) {
         avgGrade.setText(String.valueOf(number));
     }
 
+    /**
+     * Handles exceptions by displaying the exception message in red text.
+     * 
+     * @param e The exception that was thrown.
+     */
     public void handleException(Exception e) {
         updateLabel(e.getMessage(), Color.RED);
     }
 
+    /**
+     * Displays a success message in green text.
+     * 
+     * @param string The success message to display.
+     */
     public void displayMessage(String string) {
         updateLabel(string, Color.GREEN);
     }
 
+    /**
+     * Updates the info label with a message and sets its text color.
+     * 
+     * @param string The message to display.
+     * @param color The color to set the label's text to (e.g., red for errors, green for success).
+     */
     private void updateLabel(String string, Color color) {
         info.setText(string);
         info.setForeground(color);

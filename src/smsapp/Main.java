@@ -7,9 +7,22 @@ import smsapp.student.StudentManagerImpl;
 import smsapp.student.StudentRepository;
 import smsapp.userinterface.MainWindow;
 
+/**
+ * The entry point of the student management system application. 
+ * This class is responsible for initializing the application, setting up the 
+ * necessary components, and handling any exceptions that occur during the setup.
+ * 
+ * The `Main` class creates the following components:
+ * - A `StudentRepository` for managing student data storage.
+ * - A `StudentManagerImpl` to handle business logic related to students.
+ * - A `MainWindow` to create the main user interface for the application.
+ */
 public class Main {
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
-        // TODO: connect everything together!
         MainWindow mainWindow = null;
         try {
             StudentRepository studentRepository = new StudentRepository();
