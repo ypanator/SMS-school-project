@@ -1,6 +1,7 @@
 package smsapp.userinterface;
 
 import java.awt.Color;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -26,7 +27,7 @@ public class OutputPanel extends JPanel {
 
     private final StudentManager studentManager;
 
-    public OutputPanel(StudentManager studentManager) {
+    public OutputPanel(StudentManager studentManager) throws SQLException {
         this.studentManager = studentManager;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -35,7 +36,7 @@ public class OutputPanel extends JPanel {
         add(info);
     }
 
-    private JPanel createDataPanel() {
+    private JPanel createDataPanel() throws SQLException {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
