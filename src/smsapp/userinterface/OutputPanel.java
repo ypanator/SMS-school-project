@@ -32,6 +32,10 @@ public class OutputPanel extends JPanel {
     // TODO: to change!
     private final Color avgGradeBgColor = new Color(190, 191, 189);
     private final int avgGradeWidth = 100, avgGradeHeight = 30;
+    private final int avgGradeBorderThickness = 3;
+
+    private final Color InfoBgColor = new Color(190, 191, 189);
+    private final int infoBorderThickness = 2;
 
     /**
      * Constructs a new OutputPanel that displays student data and messages.
@@ -39,9 +43,11 @@ public class OutputPanel extends JPanel {
      * @throws SQLException If an error occurs while retrieving student data.
      */
     public OutputPanel() throws SQLException {
-
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        customizeAvgGrade();
+        customizeInfo();
+        
         add(createDataPanel());
         add(info);
     }
@@ -72,11 +78,6 @@ public class OutputPanel extends JPanel {
     private JPanel createAvgGradeWithLabel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-        avgGrade.setBorder(new LineBorder(Color.BLACK, 3));
-        avgGrade.setBackground(avgGradeBgColor);
-        avgGrade.setOpaque(true);
-        avgGrade.setPreferredSize(new Dimension(avgGradeWidth, avgGradeHeight));
 
         panel.add(avgGrade);
         panel.add(new JLabel("Average\ngrade"));
@@ -143,5 +144,18 @@ public class OutputPanel extends JPanel {
     private void updateLabel(String string, Color color) {
         info.setText(string);
         info.setForeground(color);
+    }
+
+    private void customizeInfo() {
+        info.setBorder(new LineBorder(Color.BLACK, infoBorderThickness));
+        info.setBackground(InfoBgColor);
+        info.setOpaque(true);
+    }
+
+    private void customizeAvgGrade() {
+        avgGrade.setBorder(new LineBorder(Color.BLACK, avgGradeBorderThickness));
+        avgGrade.setBackground(avgGradeBgColor);
+        avgGrade.setOpaque(true);
+        avgGrade.setPreferredSize(new Dimension(avgGradeWidth, avgGradeHeight));
     }
 }
