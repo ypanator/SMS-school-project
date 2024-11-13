@@ -55,6 +55,8 @@ public class OutputPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
+        students.setDefaultEditor(Object.class, null); // make table non-editable
+
         panel.add(new JScrollPane(students));
         panel.add(createAvgGradeWithLabel());
 
