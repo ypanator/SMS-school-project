@@ -38,9 +38,6 @@ public class Main {
 }
 
 /*TODO:
- * display info in a box
- * make the table pretty
- * make button pretty
  * use pretty theme for the whole app and better font
  * add title, icon
  * empty fields?
