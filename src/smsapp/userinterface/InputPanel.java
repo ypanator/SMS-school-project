@@ -49,9 +49,12 @@ public class InputPanel extends JPanel {
      * @return The name entered by the user
      */
     public String getName() {
-        String output = name.getText();
-        name.setText("");
-        return output;
+        try {
+            String output = name.getText();
+            return output;
+        } finally {
+            name.setText("");
+        }
     }
 
     /**
@@ -64,10 +67,11 @@ public class InputPanel extends JPanel {
     public int getAge() {
         try {
             int output = Integer.parseInt(age.getText());
-            age.setText("");
             return output;
         } catch (NumberFormatException e) {
             throw new NumberFormatException("Please provide age as a whole number");
+        } finally {
+            age.setText("");
         }
     }
 
@@ -81,10 +85,11 @@ public class InputPanel extends JPanel {
     public Double getGrade() {
         try {
             Double output = Double.parseDouble(grade.getText());
-            grade.setText("");
             return output;
         } catch (NumberFormatException e) {
             throw new NumberFormatException("Please provide grade as a number with two decimal places, separated with a dot");
+        } finally {
+            grade.setText("");
         }
     }
 
@@ -94,9 +99,12 @@ public class InputPanel extends JPanel {
      * @return The student ID entered by the user
      */
     public String getStudentId() {
-        String output = studentID.getText();
-        studentID.setText("");
-        return output;
+        try {
+            String output = studentID.getText();
+            return output;
+        } finally {
+            studentID.setText("");            
+        }
     }
     
     /**
@@ -199,6 +207,17 @@ public class InputPanel extends JPanel {
      * @return A new Student object with the data from the input fields
      */
     private Student createStudentFromFields() {
-        return new Student(getName(), getAge(), getGrade(), getStudentId());
+        try {
+            return new Student(getName(), getAge(), getGrade(), getStudentId());
+        } finally {
+            clearAllFields();
+        }
+    }
+
+    private void clearAllFields() {
+        name.setText("");
+        age.setText("");
+        grade.setText("");
+        studentID.setText("");
     }
 }
