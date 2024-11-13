@@ -1,6 +1,7 @@
 package smsapp.userinterface;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import smsapp.student.Student;
@@ -26,6 +28,10 @@ public class OutputPanel extends JPanel {
     private final String[] columns = {"name", "age", "grade", "studentID"};
     private final JTable students = new JTable(new DefaultTableModel(null, columns));
     private final JLabel info = new JLabel();
+
+    // TODO: to change!
+    private final Color avgGradeBgColor = new Color(190, 191, 189);
+    private final int avgGradeWidth = 100, avgGradeHeight = 30;
 
     /**
      * Constructs a new OutputPanel that displays student data and messages.
@@ -67,8 +73,13 @@ public class OutputPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
+        avgGrade.setBorder(new LineBorder(Color.BLACK, 3));
+        avgGrade.setBackground(avgGradeBgColor);
+        avgGrade.setOpaque(true);
+        avgGrade.setPreferredSize(new Dimension(avgGradeWidth, avgGradeHeight));
+
         panel.add(avgGrade);
-        panel.add(new JLabel("Average grade"));
+        panel.add(new JLabel("Average\ngrade"));
 
         return panel;
     }
@@ -98,7 +109,7 @@ public class OutputPanel extends JPanel {
      * @param number The average grade to be displayed.
      */
     public void displayAverageGrade(double number) {
-        avgGrade.setText(String.valueOf(number));
+        avgGrade.setText(String.format("%.2f", number));
     }
 
     /**

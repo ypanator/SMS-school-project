@@ -38,12 +38,9 @@ public class Main {
 }
 
 /*TODO:
- * Clear fields even if exception occurs
- * make table fields non editable
  * 2 decimal places average grade
  * if no students present clear the table instead of showing only the exception
  * display info in a box
- * display avg grade in a box
  * make the table pretty
  * make button pretty
  * use pretty theme for the whole app and better font
