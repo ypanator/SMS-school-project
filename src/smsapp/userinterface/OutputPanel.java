@@ -93,6 +93,10 @@ public class OutputPanel extends JPanel {
         DefaultTableModel model = (DefaultTableModel) students.getModel();
         model.setRowCount(0);
 
+        if (storedStudents.isEmpty()) {
+            handleException(new IllegalStateException("No students are saved"));
+        }
+
         for (Student student : storedStudents) {
             model.addRow(new Object[] {
                 student.getName(),

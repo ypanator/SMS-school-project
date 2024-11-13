@@ -38,8 +38,6 @@ public class Main {
 }
 
 /*TODO:
- * 2 decimal places average grade
- * if no students present clear the table instead of showing only the exception
  * display info in a box
  * make the table pretty
  * make button pretty

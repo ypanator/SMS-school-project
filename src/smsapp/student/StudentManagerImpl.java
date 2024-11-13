@@ -81,11 +81,6 @@ public class StudentManagerImpl implements StudentManager {
      */
     @Override
     public ArrayList<Student> displayAllStudents() throws SQLException {
-        ArrayList<Student> students = studentRepository.getAllStudents();
-        if (students.isEmpty()) {
-            throw new IllegalStateException("No students are saved");
-        }
-
         return studentRepository.getAllStudents();
     }
 
