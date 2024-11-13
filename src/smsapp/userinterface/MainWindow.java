@@ -32,7 +32,7 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        outputPanel = new OutputPanel(studentManager);
+        outputPanel = new OutputPanel();
         inputPanel = new InputPanel(studentManager, outputPanel);
 
         add(outputPanel);

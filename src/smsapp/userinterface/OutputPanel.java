@@ -12,7 +12,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import smsapp.student.Student;
-import smsapp.student.StudentManager;
 
 /**
  * A JPanel that displays student data in a table and the average grade. 
@@ -28,16 +27,12 @@ public class OutputPanel extends JPanel {
     private final JTable students = new JTable(new DefaultTableModel(null, columns));
     private final JLabel info = new JLabel();
 
-    private final StudentManager studentManager;
-
     /**
      * Constructs a new OutputPanel that displays student data and messages.
      * 
-     * @param studentManager The StudentManager instance used to manage student data.
      * @throws SQLException If an error occurs while retrieving student data.
      */
-    public OutputPanel(StudentManager studentManager) throws SQLException {
-        this.studentManager = studentManager;
+    public OutputPanel() throws SQLException {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
