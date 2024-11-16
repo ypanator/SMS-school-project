@@ -49,12 +49,9 @@ public class InputPanel extends JPanel {
      * @return The name entered by the user
      */
     public String getName() {
-        try {
-            String output = name.getText();
-            return output;
-        } finally {
-            name.setText("");
-        }
+        String output = name.getText().trim();
+        verify(output, "name");
+        return output;
     }
 
     /**
@@ -66,12 +63,12 @@ public class InputPanel extends JPanel {
      */
     public int getAge() {
         try {
-            int output = Integer.parseInt(age.getText());
+            String text = age.getText().trim();
+            verify(text, "age");
+            int output = Integer.parseInt(text);
             return output;
         } catch (NumberFormatException e) {
             throw new NumberFormatException("Please provide age as a whole number");
-        } finally {
-            age.setText("");
         }
     }
 
@@ -84,12 +81,12 @@ public class InputPanel extends JPanel {
      */
     public Double getGrade() {
         try {
-            Double output = Double.parseDouble(grade.getText());
+            String text = grade.getText().trim();
+            verify(text, "grade");
+            Double output = Double.parseDouble(text);
             return output;
         } catch (NumberFormatException e) {
             throw new NumberFormatException("Please provide grade as a number with two decimal places, separated with a dot");
-        } finally {
-            grade.setText("");
         }
     }
 
@@ -99,12 +96,9 @@ public class InputPanel extends JPanel {
      * @return The student ID entered by the user
      */
     public String getStudentId() {
-        try {
-            String output = studentID.getText();
-            return output;
-        } finally {
-            studentID.setText("");            
-        }
+        String output = studentID.getText().trim();
+        verify(output, "studentID");
+        return output;
     }
     
     /**
@@ -127,6 +121,7 @@ public class InputPanel extends JPanel {
             try {
                 studentManager.addStudent(createStudentFromFields());
                 outputPanel.displayMessage("Student has been added");
+                clearAllFields();
             } catch (Exception e) {
                 outputPanel.handleException(e);
             }
@@ -136,6 +131,7 @@ public class InputPanel extends JPanel {
             try {
                 studentManager.removeStudent(getStudentId());
                 outputPanel.displayMessage("Student has been removed");
+                clearStudentIDField();
             } catch (Exception e) {
                 outputPanel.handleException(e);
             }
@@ -145,6 +141,7 @@ public class InputPanel extends JPanel {
             try {
                 studentManager.updateStudent(createStudentFromFields());
                 outputPanel.displayMessage("Student has been updated");
+                clearAllFields();
             } catch (Exception e) {
                 outputPanel.handleException(e);
             }
@@ -201,23 +198,30 @@ public class InputPanel extends JPanel {
         return panel;
     }
 
-    /**
-     * Creates a new Student object based on the data entered in the input fields.
-     * 
-     * @return A new Student object with the data from the input fields
-     */
     private Student createStudentFromFields() {
-        try {
-            return new Student(getName(), getAge(), getGrade(), getStudentId());
-        } finally {
-            clearAllFields();
-        }
+        Student student = new Student(getName(), getAge(), getGrade(), getStudentId());
+        return student;
     }
 
     private void clearAllFields() {
-        name.setText("");
-        age.setText("");
-        grade.setText("");
-        studentID.setText("");
+        clearNameField();
+        clearAgeField();
+        clearGradeField();
+        clearStudentIDField();
+    }
+
+    private void clearNameField() { name.setText(""); }
+    private void clearAgeField() { age.setText(""); }
+    private void clearGradeField() { grade.setText(""); }
+    private void clearStudentIDField() { studentID.setText(""); }
+
+    /**
+     * Verifies that the String is not empty. Otherwise throws an IllegalArgumentException.
+     * 
+     * @param str string to verify
+     * @param fieldName fieldName for Exception information
+     */
+    private void verify(String str, String fieldName) {
+        if (str.isEmpty()) { throw new IllegalArgumentException(fieldName + " cannot be empty"); }
     }
 }

@@ -3,6 +3,7 @@ package smsapp.userinterface;
 import java.sql.SQLException;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import smsapp.student.StudentManager;
@@ -27,10 +28,13 @@ public class MainWindow extends JFrame {
      * @throws SQLException If an error occurs when initializing the student manager or the database.
      */
     public MainWindow(StudentManager studentManager) throws SQLException {
-        setSize(500, 400); 
+        setSize(700, 400); 
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+        setIconImage(new ImageIcon("resources/book_icon.jpg").getImage());
+        setTitle("Student management application");
 
         outputPanel = new OutputPanel();
         inputPanel = new InputPanel(studentManager, outputPanel);
@@ -38,7 +42,7 @@ public class MainWindow extends JFrame {
         add(outputPanel);
         add(inputPanel);
 
-        pack();
+        pack(); // smartly resizes components
         setVisible(true);
     }
 

@@ -24,6 +24,8 @@ public class Main {
             StudentRepository studentRepository = new StudentRepository();
             StudentManager studentManager = new StudentManagerImpl(studentRepository);
             mainWindow = new MainWindow(studentManager);
+
+            mainWindow.getOutputPanel().displayMessage("Application correctly loaded");
         } catch (Exception e) {
             if (mainWindow != null) {
                 mainWindow.getOutputPanel().handleException(e);

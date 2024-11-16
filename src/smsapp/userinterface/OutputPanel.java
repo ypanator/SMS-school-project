@@ -7,14 +7,18 @@ import java.awt.Font;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import smsapp.student.Student;
 
@@ -32,17 +36,18 @@ public class OutputPanel extends JPanel {
     private final JTable students = new JTable(new DefaultTableModel(null, columns));
     private final JLabel info = new JLabel();
 
-    // TODO: to change!
     private final Color avgGradeBgColor = new Color(190, 191, 189);
-    private final int avgGradeWidth = 100, avgGradeHeight = 30;
+    private final int avgGradeWidth = 50, avgGradeHeight = 50;
     private final int avgGradeBorderThickness = 3;
 
-    private final Color InfoBgColor = new Color(190, 191, 189);
-    private final int infoBorderThickness = 2;
-
-    private final int tableFontSize = 14;
-    private final Color tableEvenRowColor = new Color(240, 240, 240);
+    private final Font tableFont = new Font("Arial", Font.PLAIN, 16);
+    private final Color tableEvenRowColor = new Color(225, 225, 225);
     private final Color tableOddRowColor = Color.WHITE;
+
+    private final Color tableHeaderTextColor = new Color(255, 255, 255);
+    private final Color tableHeaderBgColor = new Color(115, 115, 115);
+    private final Font tableHeaderFont = new Font("Dialog", Font.BOLD, 18);
+    
 
     /**
      * Constructs a new OutputPanel that displays student data and messages.
@@ -56,8 +61,11 @@ public class OutputPanel extends JPanel {
         customizeInfo();
         customizeTable();
         
+        // create struts for padding
         add(createDataPanel());
+        add(Box.createVerticalStrut(10));
         add(info);
+        add(Box.createVerticalStrut(10));
     }
 
     /**
@@ -70,8 +78,11 @@ public class OutputPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
+        // create struts for padding
         panel.add(new JScrollPane(students));
+        panel.add(Box.createHorizontalStrut(10));
         panel.add(createAvgGradeWithLabel());
+        panel.add(Box.createHorizontalStrut(10));
 
         return panel;
     }
@@ -86,7 +97,9 @@ public class OutputPanel extends JPanel {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         panel.add(avgGrade);
-        panel.add(new JLabel("Average\ngrade"));
+        // add labels word by word to place them one above the other
+        panel.add(new JLabel("Average"));
+        panel.add(new JLabel("grade"));
 
         return panel;
     }
@@ -138,7 +151,7 @@ public class OutputPanel extends JPanel {
      * @param string The success message to display.
      */
     public void displayMessage(String string) {
-        updateLabel(string, Color.GREEN);
+        updateLabel(string, new Color(2, 189, 68));
     }
 
     /**
@@ -157,9 +170,11 @@ public class OutputPanel extends JPanel {
      * Sets a border, background color, and ensures the component is opaque.
      */
     private void customizeInfo() {
-        info.setBorder(new LineBorder(Color.BLACK, infoBorderThickness));
-        info.setBackground(InfoBgColor);
-        info.setOpaque(true);
+        // creates padding around the info
+        info.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        // centers the info in the window
+        info.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
     /**
@@ -168,9 +183,20 @@ public class OutputPanel extends JPanel {
      */
     private void customizeAvgGrade() {
         avgGrade.setBorder(new LineBorder(Color.BLACK, avgGradeBorderThickness));
+
         avgGrade.setBackground(avgGradeBgColor);
+
+        // displayes the background
         avgGrade.setOpaque(true);
+
+        // ensures the label is fixed in size
+        avgGrade.setMinimumSize(new Dimension(avgGradeWidth, avgGradeHeight));
+        avgGrade.setMaximumSize(new Dimension(avgGradeWidth, avgGradeHeight));
         avgGrade.setPreferredSize(new Dimension(avgGradeWidth, avgGradeHeight));
+
+        // centers the text inside the label
+        avgGrade.setHorizontalAlignment(SwingConstants.CENTER);
+        avgGrade.setVerticalAlignment(SwingConstants.CENTER); 
     }
 
     /**
@@ -183,8 +209,16 @@ public class OutputPanel extends JPanel {
      * colors are applied (light gray for even rows and white for odd rows).
      */
     private void customizeTable() {
-        students.setDefaultEditor(Object.class, null); // make table non-editable
-        students.setFont(new Font("Arial", Font.PLAIN, tableFontSize));
+        // make table non-editable
+        students.setDefaultEditor(Object.class, null);
+
+        students.setFont(tableFont);
+
+        JTableHeader header = students.getTableHeader();
+        header.setFont(tableHeaderFont);
+        header.setBackground(tableHeaderBgColor);
+        header.setForeground(tableHeaderTextColor);
+
         students.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(
