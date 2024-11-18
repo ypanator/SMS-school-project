@@ -34,7 +34,7 @@ public class MainWindow extends JFrame {
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         setIconImage(new ImageIcon("resources/book_icon.jpg").getImage());
-        setTitle("Student management application");
+        setTitle("Student Management System");
 
         outputPanel = new OutputPanel();
         inputPanel = new InputPanel(studentManager, outputPanel);
