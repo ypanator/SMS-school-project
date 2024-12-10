@@ -37,7 +37,6 @@ public class StudentRepository {
      * 
      * @param student The student to be saved
      * @throws SQLException If a database error occurs while saving the student
-     * @throws IllegalArgumentException If a student with the same ID already exists in the database
      */
     public void save(Student student) throws SQLException {
         String sql = "INSERT INTO students (studentID, name, age, grade) VALUES (?, ?, ?, ?);";
@@ -51,7 +50,6 @@ public class StudentRepository {
      * 
      * @param student The student with updated information
      * @throws SQLException If a database error occurs while updating the student
-     * @throws IllegalArgumentException If the student with the provided ID does not exist
      */
     public void update(Student student) throws SQLException {
         String sql = "UPDATE students SET name = ?, age = ?, grade = ? WHERE studentID = ?;";
@@ -71,6 +69,7 @@ public class StudentRepository {
         return runSelectQuery(sql, data -> {
             ArrayList<Student> students = new ArrayList<>();
 
+            // while there is more student information, extract it and create a new student and add it to the returned list
             while (data.next()) {
                 students.add(new Student(
                     data.getString("name"), 
@@ -104,6 +103,8 @@ public class StudentRepository {
      */
     public boolean isPresent(String studentID) throws SQLException {
         String sql = "SELECT 1 FROM students WHERE studentID = ?;";
+
+        // data.next() returns true if any information is retrieved from the query
         return runSelectQuery(sql, data -> data.next(), studentID);
     }
 
@@ -117,7 +118,9 @@ public class StudentRepository {
     public Student getStudent(String studentID) throws SQLException {
         String sql = "SELECT * FROM students WHERE studentID = ?;";
         return runSelectQuery(sql, data -> {
+            // push data pointer to the first student
             data.next();
+
             return new Student(
                 data.getString("name"), 
                 data.getInt("age"), 
@@ -162,22 +165,29 @@ public class StudentRepository {
 
     /**
      * Executes an SQL update query (INSERT, UPDATE, DELETE) in the database.
+     * Function was created to align with the DRY principle.
      * 
      * @param sql The SQL query to be executed
      * @param params The parameters to be set in the prepared statement
      * @throws SQLException If a database error occurs while executing the query
      */
     private void runUpdateQuery(String sql, Object... params) throws SQLException {
+        // all properties after the first one will be stored as an Array named params
+
+        // establish a connection
         try (Connection connection = DriverManager.getConnection(url)) {
 
+            // if params array is not empty, inject the parameters into the sql query provided
             if (params.length > 0) {
                 try (PreparedStatement statement = connection.prepareStatement(sql)) {
                     for (int i = 0; i < params.length; i++) {
+                        // inject them in order, if too many or too few arguments are provided, the SQLException will be thrown!
                         statement.setObject(i + 1, params[i]);
                     }
                     statement.executeUpdate();
                 }
             } else {
+                // else create a normal statement and execute it
                 try (Statement statement = connection.createStatement()) {
                     statement.execute(sql);
                 }
@@ -187,6 +197,7 @@ public class StudentRepository {
 
     /**
      * Executes an SQL select query and processes the result set using the provided function.
+     * Function was created to align with the DRY principle.
      * 
      * @param sql The SQL query to be executed
      * @param function The function to process the result set
@@ -196,20 +207,28 @@ public class StudentRepository {
      * @throws SQLException If a database error occurs while executing the query or processing the result
      */
     private <R> R runSelectQuery(String sql, SQLFunction<R, ResultSet> function, Object... params) throws SQLException {
+        // all properties after the first one will be stored as an Array named params
+
+        // establish a connection
         try (Connection connection = DriverManager.getConnection(url)) {
 
+            // if params array is not empty, inject the parameters into the sql query provided
             if (params.length > 0) {
                 try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    // inject them in order, if too many or too few arguments are provided, the SQLException will be thrown!
                     for (int i = 0; i < params.length; i++) {
                         statement.setObject(i + 1, params[i]);
                     }
                     try (ResultSet data = statement.executeQuery()) {
+                        // pass in the result of the query into the provided function and return whatever it returns
                         return function.apply(data);
                     }
                 }
             } else {
+                // else create a normal statement and execute it
                 try (Statement statement = connection.createStatement()) {
                     try (ResultSet data = statement.executeQuery(sql)) {
+                        // pass in the result of the query into the provided function and return whatever it returns
                         return function.apply(data);
                     }
                 }
@@ -221,17 +240,18 @@ public class StudentRepository {
 /**
  * A functional interface for SQL operations that accept a {@link ResultSet} and return a result.
  * Used to process the result of an SQL select query.
+ * Required to run methods that throw an Exception.
  * 
- * @param <R> The type of the result
- * @param <T> The type of the input (typically {@link ResultSet})
+ * @param <R> The type of the return value
+ * @param <T> The type of the passed parameter (typically {@link ResultSet})
  */
 @FunctionalInterface
 interface SQLFunction<R, T> {
     /**
-     * Applies the function to the given input.
+     * Applies the function to the given parameter.
      * 
-     * @param t The input value
-     * @return The result of the function
+     * @param t The parameter of type T (typically {@link ResultSet})
+     * @return The result of the function of type R
      * @throws SQLException If an error occurs while processing the SQL result
      */
     R apply(T t) throws SQLException;

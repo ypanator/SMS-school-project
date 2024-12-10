@@ -73,11 +73,9 @@ public class StudentManagerImpl implements StudentManager {
 
     /**
      * Retrieves all students stored in the system.
-     * If there are no students, an {@link IllegalStateException} is thrown.
      * 
      * @return A list of all students
      * @throws SQLException If a database error occurs while retrieving the students
-     * @throws IllegalStateException If there are no students saved in the repository
      */
     @Override
     public ArrayList<Student> displayAllStudents() throws SQLException {
@@ -92,6 +90,10 @@ public class StudentManagerImpl implements StudentManager {
      * @throws SQLException If a database error occurs while retrieving the students
      * @throws IllegalStateException If no students exist, preventing the average calculation
      */
+
+    // <-- TODO test if no students present -->
+
+
     @Override
     public double calculateAverageGrade() throws SQLException {
         ArrayList<Student> students = displayAllStudents();

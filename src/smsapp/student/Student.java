@@ -29,6 +29,7 @@ public class Student {
      * @throws IllegalArgumentException if the age is less than 1 or the grade is out of the valid range
      */
     public Student(String name, int age, double grade, String studentID) {
+        // uses setters for additional validation
         setName(name);
         setAge(age);
         setGrade(grade);

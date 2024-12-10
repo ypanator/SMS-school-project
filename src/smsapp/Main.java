@@ -14,7 +14,7 @@ import smsapp.userinterface.MainWindow;
  * 
  * The `Main` class creates the following components:
  * - A `StudentRepository` for managing student data storage.
- * - A `StudentManagerImpl` to handle business logic related to students.
+ * - A `StudentManager` to handle business logic related to students.
  * - A `MainWindow` to create the main user interface for the application.
  */
 public class Main {
@@ -28,8 +28,10 @@ public class Main {
             mainWindow.getOutputPanel().displayMessage("Application correctly loaded");
         } catch (Exception e) {
             if (mainWindow != null) {
+                // if the application has loaded, display any errors in the main gui window
                 mainWindow.getOutputPanel().handleException(e);
             } else {
+                // else display a popup dialog describing the error
                 JOptionPane.showMessageDialog(null, 
                     "An error occurred: " + e.getMessage(), 
                     "Error", 
@@ -38,9 +40,3 @@ public class Main {
         } 
     }
 }
-
-/*TODO:
- * use pretty theme for the whole app and better font
- * add title, icon
- * empty fields?
- */
