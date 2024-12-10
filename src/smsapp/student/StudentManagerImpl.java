@@ -76,9 +76,14 @@ public class StudentManagerImpl implements StudentManager {
      * 
      * @return A list of all students
      * @throws SQLException If a database error occurs while retrieving the students
+     * @throws IllegalStateException If no students exist.
      */
     @Override
     public ArrayList<Student> displayAllStudents() throws SQLException {
+        ArrayList<Student> students = studentRepository.getAllStudents();
+        if (students.isEmpty()) {
+            throw new IllegalStateException("No students saved");
+        }
         return studentRepository.getAllStudents();
     }
 
@@ -88,15 +93,14 @@ public class StudentManagerImpl implements StudentManager {
      * 
      * @return The average grade of all students
      * @throws SQLException If a database error occurs while retrieving the students
-     * @throws IllegalStateException If no students exist, preventing the average calculation
+     * @throws IllegalStateException If no students exist.
      */
-
-    // <-- TODO test if no students present -->
-
-
     @Override
     public double calculateAverageGrade() throws SQLException {
-        ArrayList<Student> students = displayAllStudents();
+        ArrayList<Student> students = studentRepository.getAllStudents();
+        if (students.isEmpty()) {
+            throw new IllegalStateException("No students saved");
+        }
         return students.stream().mapToDouble(Student::getGrade).average().getAsDouble();
     }
 }

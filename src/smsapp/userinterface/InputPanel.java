@@ -50,7 +50,7 @@ public class InputPanel extends JPanel {
      */
     public String getName() {
         String output = name.getText().trim();
-        verify(output, "name");
+        verify(output, "Name");
         return output;
     }
 
@@ -64,7 +64,7 @@ public class InputPanel extends JPanel {
     public int getAge() {
         try {
             String text = age.getText().trim();
-            verify(text, "age");
+            verify(text, "Age");
             int output = Integer.parseInt(text);
             return output;
         } catch (NumberFormatException e) {
@@ -82,7 +82,7 @@ public class InputPanel extends JPanel {
     public Double getGrade() {
         try {
             String text = grade.getText().trim();
-            verify(text, "grade");
+            verify(text, "Grade");
             Double output = Double.parseDouble(text);
             return output;
         } catch (NumberFormatException e) {
