@@ -44,7 +44,7 @@ public class InputPanel extends JPanel {
     }
 
     /**
-     * Retrieves the name entered in the name text field and clears the field.
+     * Retrieves the name entered in the name text field.
      * 
      * @return The name entered by the user
      */
@@ -55,7 +55,7 @@ public class InputPanel extends JPanel {
     }
 
     /**
-     * Retrieves the age entered in the age text field, parses it as an integer, and clears the field.
+     * Retrieves the age entered in the age text field, parses it as an integer.
      * Throws an exception if the entered value is not a valid integer.
      * 
      * @return The age entered by the user
@@ -73,7 +73,7 @@ public class InputPanel extends JPanel {
     }
 
     /**
-     * Retrieves the grade entered in the grade text field, parses it as a double, and clears the field.
+     * Retrieves the grade entered in the grade text field, parses it as a double.
      * Throws an exception if the entered value is not a valid number.
      * 
      * @return The grade entered by the user
@@ -91,7 +91,7 @@ public class InputPanel extends JPanel {
     }
 
     /**
-     * Retrieves the student ID entered in the student ID text field and clears the field.
+     * Retrieves the student ID entered in the student ID text field.
      * 
      * @return The student ID entered by the user
      */
@@ -180,8 +180,11 @@ public class InputPanel extends JPanel {
      * @return A JPanel containing the input fields for student data
      */
     private JPanel createStudentDataPanel() {
+        final int rows = 2, cols = 4, gap = 2;
+
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 4, 2, 2));
+        // create a 2x4 grid to place elements with 2 pixes gaps
+        panel.setLayout(new GridLayout(rows, cols, gap, gap));
 
         // first row
         panel.add(new JLabel("name"));

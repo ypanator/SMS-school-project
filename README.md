@@ -65,6 +65,6 @@
     <li>To display saved students, press the the "Display All Students" button</li>
     <li>To calculate the average grade across all saved students, press the the "Calculate Average" button</li>
 </ul>
-<em>note: the displayed student data isnt automatically updated. To see the newest data press either <strong>"Display All students"</strong> button or the <strong>"Calculate Average"</strong> button.</em>
+<em>Please note: the displayed student data isnt automatically updated. To see the newest data press the <strong>"Display All students"</strong> button.</em>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

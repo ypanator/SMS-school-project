@@ -25,11 +25,14 @@ public class MainWindow extends JFrame {
      * Constructs a new MainWindow for the student management application.
      * 
      * @param studentManager The StudentManager instance that handles student data operations.
-     * @throws SQLException If an error occurs when initializing the student manager or the database.
+     * @throws SQLException If a database error occurs.
      */
     public MainWindow(StudentManager studentManager) throws SQLException {
-        setSize(700, 400); 
-        setResizable(false);
+        final int width = 700, height = 400;
+        final boolean isResizable = true;
+
+        setSize(width, height); 
+        setResizable(isResizable);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -49,15 +52,17 @@ public class MainWindow extends JFrame {
     /**
      * Retrieves the OutputPanel associated with this MainWindow.
      * 
-     * @return The OutputPanel instance used for displaying student information and messages.
+     * @return The OutputPanel instance.
      */
     public OutputPanel getOutputPanel() {
         return outputPanel;
     }
 
     
-    /** 
-     * @return InputPanel
+    /**
+     * Retrieves the InputPanel associated with this MainWindow.
+     * 
+     * @return The InputPanel instance.
      */
     public InputPanel getInputPanel() {
         return inputPanel;

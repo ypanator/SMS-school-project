@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -38,7 +39,7 @@ public class OutputPanel extends JPanel {
 
     private final Color avgGradeBgColor = new Color(190, 191, 189);
     private final int avgGradeWidth = 50, avgGradeHeight = 50;
-    private final int avgGradeBorderThickness = 3;
+    private final Border avgGradeBorder = new LineBorder(Color.BLACK, 3);
 
     private final Font tableFont = new Font("Arial", Font.PLAIN, 16);
     private final Color tableEvenRowColor = new Color(225, 225, 225);
@@ -47,6 +48,8 @@ public class OutputPanel extends JPanel {
     private final Color tableHeaderTextColor = new Color(255, 255, 255);
     private final Color tableHeaderBgColor = new Color(115, 115, 115);
     private final Font tableHeaderFont = new Font("Dialog", Font.BOLD, 18);
+
+    private final Border infoPadding = new EmptyBorder(5, 5, 5, 5);
     
 
     /**
@@ -57,6 +60,7 @@ public class OutputPanel extends JPanel {
     public OutputPanel() throws SQLException {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        // apply custom styling
         customizeAvgGrade();
         customizeInfo();
         customizeTable();
@@ -72,9 +76,8 @@ public class OutputPanel extends JPanel {
      * Creates a panel to display student data (in a table) and the average grade label.
      * 
      * @return A JPanel containing the JTable and the average grade label.
-     * @throws SQLException If an error occurs while retrieving student data.
      */
-    private JPanel createDataPanel() throws SQLException {
+    private JPanel createDataPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
@@ -111,6 +114,7 @@ public class OutputPanel extends JPanel {
      */
     public void displayStudents(ArrayList<Student> storedStudents) {
         DefaultTableModel model = (DefaultTableModel) students.getModel();
+        // clear the entire table
         model.setRowCount(0);
 
         if (storedStudents.isEmpty()) {
@@ -133,6 +137,7 @@ public class OutputPanel extends JPanel {
      * @param number The average grade to be displayed.
      */
     public void displayAverageGrade(double number) {
+        // display as a float with two decimal places
         avgGrade.setText(String.format("%.2f", number));
     }
 
@@ -158,7 +163,7 @@ public class OutputPanel extends JPanel {
      * Updates the info label with a message and sets its text color.
      * 
      * @param string The message to display.
-     * @param color The color to set the label's text to (e.g., red for errors, green for success).
+     * @param color The color to set the label's text to.
      */
     private void updateLabel(String string, Color color) {
         info.setText(string);
@@ -171,7 +176,7 @@ public class OutputPanel extends JPanel {
      */
     private void customizeInfo() {
         // creates padding around the info
-        info.setBorder(new EmptyBorder(5, 5, 5, 5));
+        info.setBorder(infoPadding);
 
         // centers the info in the window
         info.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -182,7 +187,7 @@ public class OutputPanel extends JPanel {
      * Sets a border, background color, opacity, and preferred size for the component.
      */
     private void customizeAvgGrade() {
-        avgGrade.setBorder(new LineBorder(Color.BLACK, avgGradeBorderThickness));
+        avgGrade.setBorder(avgGradeBorder);
 
         avgGrade.setBackground(avgGradeBgColor);
 
