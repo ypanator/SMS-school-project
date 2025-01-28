@@ -29,7 +29,7 @@ public class MainWindow extends JFrame {
      */
     public MainWindow(StudentManager studentManager) throws SQLException {
         final int width = 700, height = 400;
-        final boolean isResizable = true;
+        final boolean isResizable = false;
 
         setSize(width, height); 
         setResizable(isResizable);
